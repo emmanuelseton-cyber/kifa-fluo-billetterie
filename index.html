@@ -10244,72 +10244,52 @@ function genFromList(ref){
   document.getElementById('gen-sel').value=ref; onSel(); doGen();
 }
 
-function makeQRCanvas(text){
-  // Generate QR directly on an offscreen canvas using QRCode lib
-  var tmp=document.createElement('canvas');
-  tmp.width=160; tmp.height=160;
-  // Use QRCode to get the matrix
-  var qr=new QRCode(tmp,{text:text,width:160,height:160,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
-  // QRCode renders on tmp canvas directly
-  return tmp;
-}
-
 function doGen(){
   var nom=document.getElementById('gen-nom').value.trim()||'Participant';
   var numRaw=document.getElementById('gen-num').value.trim()||'0001';
   var ref='KFP-2026-'+numRaw.padStart(4,'0');
   var qrData='KIFA FLUO PARTY | '+ref+' | '+nom+' | 8 JUILLET 2026 | KIFA ROOFTOP BINGERVILLE';
 
-  // Method 1: Use QRCode on offscreen canvas directly
-  var offscreen=document.createElement('canvas');
-  offscreen.width=160; offscreen.height=160;
+  // Step 1: Create a temp div and render QR there
   var div=document.getElementById('qr-tmp');
   div.innerHTML='';
-  div.appendChild(offscreen);
+  div.style.cssText='position:fixed;left:-9999px;top:0;width:200px;height:200px;background:#fff;';
 
-  new QRCode(offscreen,{
+  // Step 2: Use QRCode to render into div (creates canvas internally)
+  new QRCode(div,{
     text:qrData,
-    width:160,height:160,
+    width:200,height:200,
     colorDark:'#000000',
     colorLight:'#ffffff',
     correctLevel:QRCode.CorrectLevel.H
   });
 
-  // Small delay then convert canvas to data URL then to Image
-  setTimeout(function(){
-    try{
-      // Get the QR canvas (QRCode lib may create its own)
-      var qrCanvas=div.querySelector('canvas');
-      if(!qrCanvas){qrCanvas=offscreen;}
-
-      // Convert to dataURL then load as Image for reliable drawImage
-      var dataURL=qrCanvas.toDataURL('image/png');
-      var img=new Image();
-      img.onload=function(){
-        renderTicket(nom,ref,img);
-        document.getElementById('gen-res').style.display='block';
-      };
-      img.onerror=function(){
-        // Fallback: draw directly from canvas
-        renderTicket(nom,ref,qrCanvas);
-        document.getElementById('gen-res').style.display='block';
-      };
-      img.src=dataURL;
-    } catch(e){
-      // Final fallback: no QR
+  // Step 3: After render, get the canvas QRCode created
+  function getQRAndRender(attempt){
+    var qc=div.querySelector('canvas');
+    if(qc && qc.width>0){
+      // Got the QR canvas - draw ticket with it
+      renderTicket(nom,ref,qc);
+      document.getElementById('gen-res').style.display='block';
+      return;
+    }
+    // Try img tag (some browsers use img)
+    var qi=div.querySelector('img');
+    if(qi && qi.complete && qi.naturalWidth>0){
+      renderTicket(nom,ref,qi);
+      document.getElementById('gen-res').style.display='block';
+      return;
+    }
+    if(attempt<30){
+      setTimeout(function(){getQRAndRender(attempt+1);},100);
+    } else {
+      // Last resort: draw ticket without QR, show message
       renderTicket(nom,ref,null);
       document.getElementById('gen-res').style.display='block';
     }
-  }, 600);
+  }
+  setTimeout(function(){getQRAndRender(0);},300);
 }
-
-function rr(ctx,x,y,w,h,r){
-  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-}
-function hxa(hex,a){var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return 'rgba('+r+','+g+','+b+','+a+')';}
 
 function renderTicket(nom,ref,qrImg){
   var c=document.getElementById('tc'),W=600,H=1000;
@@ -10474,16 +10454,25 @@ function drawContent(ctx,nom,ref,qrImg,W,H){
   ctx.fillStyle='rgba(255,238,0,0.5)';ctx.font='400 8px Arial';ctx.letterSpacing='2px';
   ctx.fillText('QR CODE D\'ACCÈS',W/2,866);ctx.letterSpacing='0px';
 
+  // QR Code - draw directly
+  var qs=110,qx=(W-qs)/2,qy=874;
+  ctx.fillStyle='#FFFFFF';roundRect2(ctx,qx-10,qy-10,qs+20,qs+20,8);ctx.fill();
+  ctx.strokeStyle=JAUNE;ctx.lineWidth=2;
+  ctx.shadowColor=JAUNE;ctx.shadowBlur=8;
+  roundRect2(ctx,qx-10,qy-10,qs+20,qs+20,8);ctx.stroke();
+  ctx.shadowBlur=0;
   if(qrImg){
-    var qs=110,qx=(W-qs)/2,qy=874;
-    // Fond blanc QR
-    ctx.fillStyle='#FFFFFF';roundRect2(ctx,qx-7,qy-7,qs+14,qs+14,8);ctx.fill();
-    // Bordure jaune fluo
-    ctx.strokeStyle=JAUNE;ctx.lineWidth=2;
-    ctx.shadowColor=JAUNE;ctx.shadowBlur=8;
-    roundRect2(ctx,qx-7,qy-7,qs+14,qs+14,8);ctx.stroke();
-    ctx.shadowBlur=0;
-    ctx.drawImage(qrImg,qx,qy,qs,qs);
+    try{ctx.drawImage(qrImg,qx,qy,qs,qs);}
+    catch(e){
+      // Draw placeholder
+      ctx.fillStyle='#000';ctx.font='bold 9px Arial';ctx.textAlign='center';
+      ctx.fillText('QR CODE',qx+qs/2,qy+qs/2);
+    }
+  } else {
+    // Draw placeholder text in QR zone
+    ctx.fillStyle='#333';ctx.font='bold 10px Arial';ctx.textAlign='center';
+    ctx.fillText('SCANNER À L'ENTRÉE',qx+qs/2,qy+qs/2-6);
+    ctx.fillText(ref,qx+qs/2,qy+qs/2+10);
   }
 
   // Ref sous QR
