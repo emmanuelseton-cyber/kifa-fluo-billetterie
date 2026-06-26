@@ -214,7 +214,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
         <div class="sec">Aperçu — maintenir appuyé pour enregistrer</div>
         <div class="tc-wrap">
           <canvas id="tc" width="600" height="990"></canvas>
-          <p class="tc-hint">Maintiens ton doigt appuyé sur l'image → "Enregistrer" pour télécharger, puis partage sur WhatsApp.</p>
+          <button class="btn bv" id="btn-dl" style="margin-top:4px;max-width:320px">⬇ Enregistrer le ticket</button>
+<p class="tc-hint">Ou maintiens appuyé sur le ticket → Enregistrer l'image</p>
         </div>
       </div>
     </div>
@@ -10336,6 +10337,34 @@ document.getElementById('btn-reinit').addEventListener('click',reinit);
 document.getElementById('btn-vider').addEventListener('click',vider);
 document.getElementById('btn-csv').addEventListener('click',exportCSV);
 document.getElementById('btn-gen').addEventListener('click',doGen);
+
+function dlTicket(){
+  var c=document.getElementById('tc');
+  if(!c||c.width===0){notif('Génère un ticket d\'abord.','err');return;}
+  // Try standard download
+  try{
+    var link=document.createElement('a');
+    var nom=(document.getElementById('gen-nom')||{value:'ticket'}).value.trim().replace(/\s+/g,'_')||'ticket';
+    var num=(document.getElementById('gen-num')||{value:'0000'}).value.trim()||'0000';
+    link.download='Ticket_KIFA_'+nom+'_'+num+'.png';
+    link.href=c.toDataURL('image/png');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    notif('Ticket téléchargé !','ok');
+  } catch(e){
+    // Fallback: open in new tab so user can long-press
+    try{
+      var w=window.open('','_blank');
+      w.document.write('<html><body style="margin:0;background:#000;display:flex;flex-direction:column;align-items:center;padding:16px"><p style="color:#fff;font-family:Arial;margin-bottom:12px">Maintiens appuyé sur l\'image → Enregistrer l\'image</p><img src="'+c.toDataURL('image/png')+'" style="max-width:100%;border-radius:12px"/></body></html>');
+      w.document.close();
+    } catch(e2){
+      notif('Fais une capture d\'écran du ticket.','err');
+    }
+  }
+}
+
+document.getElementById('btn-dl').addEventListener('click',dlTicket);
 
 var deferredPrompt=null;
 window.addEventListener('beforeinstallprompt',function(e){
