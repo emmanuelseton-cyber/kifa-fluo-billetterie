@@ -257,6 +257,8 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 </script>
 <!-- jsQR removed for mobile performance -->
 <script>
+// Expose all functions globally BEFORE DOM loads
+
 
 var DB={}, scanKo=0, ntimer=null, SK='kifa_fluo_pwa';
 var stream=null, scanActive=false, scanLoop=null;
@@ -273,7 +275,7 @@ function notif(msg,type){
   ntimer=setTimeout(function(){el.className='notif';},3500);
 }
 
-function nav(p){
+window.nav=function(p){
   ['dash','scan','list','gen','adm'].forEach(function(x){
     document.getElementById('t-'+x).className='nb'+(x===p?' act':'');
     document.getElementById('pane-'+x).className='pane'+(x===p?' act':'');
@@ -323,7 +325,7 @@ function drawScanKpi(){
   document.getElementById('sk').textContent=scanKo;
 }
 
-function valider(ref){
+window.valider=function(ref){
   if(!ref)return;
   ref=ref.trim().toUpperCase();
   if(ref.indexOf('KFP-')!==0) ref='KFP-2026-'+ref.replace(/\D/g,'').padStart(4,'0');
@@ -349,7 +351,7 @@ function valider(ref){
 }
 
 var jsqrLoaded=false;
-function startCam(){
+window.startCam=function(){
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
     notif('Caméra non disponible — entre la référence manuellement.','err'); return;
   }
@@ -379,7 +381,7 @@ function doStartCam(){
   });
 }
 
-function stopCam(){
+window.stopCam=function(){
   scanActive=false;
   if(scanLoop){cancelAnimationFrame(scanLoop);scanLoop=null;}
   if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}
@@ -410,7 +412,7 @@ function scanQR(){
   scanLoop=requestAnimationFrame(scanQR);
 }
 
-function creerTicket(){
+window.creerTicket=function(){
   var nom=document.getElementById('an').value.trim();
   if(!nom){notif('Entre le nom du participant.','err');return;}
   var numRaw=document.getElementById('anum').value.trim();
@@ -424,7 +426,7 @@ function creerTicket(){
   drawDash(); fillSel();
 }
 
-function creerBatch(){
+window.creerBatch=function(){
   var p=document.getElementById('bp').value.trim();
   var n=document.getElementById('bn').value.trim();
   var q=Math.min(parseInt(document.getElementById('bq').value)||1,50);
@@ -440,7 +442,7 @@ function creerBatch(){
   notif(q+' ticket(s) créé(s).','ok'); drawDash(); fillSel();
 }
 
-function reinit(){
+window.reinit=function(){
   var ref=document.getElementById('rref').value.trim().toUpperCase();
   if(!ref)return;
   if(!DB[ref]){notif(ref+' introuvable.','err');return;}
@@ -448,12 +450,12 @@ function reinit(){
   notif(ref+' réinitialisé.','ok');
 }
 
-function vider(){
+window.vider=function(){
   if(!confirm('Supprimer TOUS les tickets ?'))return;
   DB={}; dbSave(); drawDash(); drawList(); fillSel(); notif('Base vidée.','ok');
 }
 
-function drawList(){
+window.drawList=function(){
   var q=document.getElementById('lq')?document.getElementById('lq').value.toLowerCase():'';
   var f=document.getElementById('lf')?document.getElementById('lf').value:'all';
   var all=Object.values(DB);
@@ -474,17 +476,17 @@ function drawList(){
   }).join('');
 }
 
-function reinitRow(ref){
+window.reinitRow=function(ref){
   if(!DB[ref])return;
   DB[ref].scanned=false; DB[ref].scanned_at=null; dbSave(); drawList(); notif(ref+' réinitialisé.','ok');
 }
 
-function delRow(ref){
+window.delRow=function(ref){
   if(!confirm('Supprimer '+ref+' ?'))return;
   delete DB[ref]; dbSave(); drawList(); fillSel(); notif(ref+' supprimé.','ok');
 }
 
-function exportCSV(){
+window.exportCSV=function(){
   var all=Object.values(DB);
   if(!all.length){notif('Aucun ticket.','err');return;}
   var lines=['Référence,Nom,Statut,Heure scan'];
@@ -507,7 +509,7 @@ function fillSel(){
   });
 }
 
-function onSel(){
+window.onSel=function(){
   var ref=document.getElementById('gen-sel').value;
   if(!ref||!DB[ref])return;
   var t=DB[ref],parts=t.ref.split('-');
@@ -515,12 +517,12 @@ function onSel(){
   document.getElementById('gen-num').value=parts[parts.length-1];
 }
 
-function genFromList(ref){
+window.genFromList=function(ref){
   if(!DB[ref])return; nav('gen');
   document.getElementById('gen-sel').value=ref; onSel(); doGen();
 }
 
-function doGen(){
+window.doGen=function(){
   var nom=document.getElementById('gen-nom').value.trim()||'Participant';
   var numRaw=document.getElementById('gen-num').value.trim()||'0001';
   var ref='KFP-2026-'+numRaw.padStart(4,'0');
@@ -779,7 +781,7 @@ function clock(){document.getElementById('clk').textContent=new Date().toLocaleT
 // Bind all buttons
 // All buttons use inline onclick
 
-function dlTicket(){
+window.dlTicket=function(){
   var c=document.getElementById('tc');
   if(!c||c.width===0){notif('Génère un ticket d\'abord.','err');return;}
   // Try standard download
@@ -812,7 +814,7 @@ window.addEventListener('beforeinstallprompt',function(e){
   e.preventDefault(); deferredPrompt=e;
   document.getElementById('install-banner').style.display='flex';
 });
-function installApp(){
+window.installApp=function(){
   if(deferredPrompt){
     deferredPrompt.prompt();
     deferredPrompt.then(function(){deferredPrompt=null;document.getElementById('install-banner').style.display='none';});
