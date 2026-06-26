@@ -2,117 +2,96 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="theme-color" content="#7B00FF">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="KIFA Fluo">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>KIFA Fluo Party — Billetterie</title>
+<title>KIFA Fluo Party</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{--bg:#F7F7F8;--card:#fff;--border:#E5E7EB;--text:#111827;--sub:#6B7280;--v:#7B00FF;--cy:#00FFCC;--ro:#FF006E;--or:#C9A84C;--ok-bg:#ECFDF5;--ok:#065F46;--ok-bd:#6EE7B7;--ko-bg:#FEF2F2;--ko:#991B1B;--ko-bd:#FCA5A5;--warn-bg:#FFFBEB;--warn:#92400E;--warn-bd:#FCD34D}
-html,body{height:100%;overflow:hidden}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:14px;color:var(--text);background:var(--bg);display:flex;flex-direction:column}
-.hdr{background:var(--v);color:#fff;padding:12px 16px 10px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;padding-top:max(12px,env(safe-area-inset-top))}
-.hdr-title{font-size:15px;font-weight:700;letter-spacing:.3px}
-.hdr-time{font-size:12px;opacity:.85;font-variant-numeric:tabular-nums}
-.nav{display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);flex-shrink:0}
-.nb{padding:8px 2px 6px;text-align:center;cursor:pointer;font-size:10px;font-weight:500;color:var(--sub);border-bottom:2px solid transparent;transition:all .15s}
-.nb .ic{font-size:20px;display:block;margin-bottom:1px}
-.nb.act{color:var(--v);border-bottom-color:var(--v)}
-.main{flex:1;overflow-y:auto;padding:12px 14px 80px;-webkit-overflow-scrolling:touch}
-.pane{display:none}.pane.act{display:block}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px}
-.sec{font-size:11px;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+body{font-family:Arial,sans-serif;font-size:14px;background:#F5F5F5;color:#111;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.hdr{background:#7B00FF;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.hdr-t{font-size:15px;font-weight:700}
+.hdr-c{font-size:12px;opacity:.9;min-width:60px;text-align:right}
+.nav{display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-bottom:1px solid #E0E0E0;flex-shrink:0}
+.nb{padding:8px 2px 6px;text-align:center;cursor:pointer;font-size:10px;font-weight:500;color:#888;border-bottom:2px solid transparent}
+.nb.on{color:#7B00FF;border-bottom-color:#7B00FF;font-weight:700}
+.nb .ic{font-size:18px;display:block;margin-bottom:1px}
+.main{flex:1;overflow-y:auto;padding:12px 14px 40px}
+.pane{display:none}.pane.on{display:block}
+.card{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.sec{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
 .kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.kb{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center}
-.kn{font-size:28px;font-weight:600;line-height:1}
-.kl{font-size:11px;color:var(--sub);margin-top:3px}
+.kb{background:#F8F8FF;border-radius:10px;padding:12px 8px;text-align:center;border:1px solid #EEE}
+.kn{font-size:26px;font-weight:700;line-height:1.1}
+.kl{font-size:10px;color:#888;margin-top:3px}
 .br{margin-bottom:10px}
-.bl{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-bottom:4px}
-.bg{height:7px;background:#F3F4F6;border-radius:4px;overflow:hidden}
-.bf{height:100%;border-radius:4px;transition:width .4s}
-.fl{margin-bottom:11px}
-.fl label{display:block;font-size:12px;font-weight:500;color:var(--sub);margin-bottom:5px}
-.fl input,.fl select{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:9px;font-size:15px;color:var(--text);background:#fff;outline:none;-webkit-appearance:none}
-.fl input:focus,.fl select:focus{border-color:var(--v);box-shadow:0 0 0 3px rgba(123,0,255,.1)}
-.btn{display:block;width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;text-align:center}
-.bv{background:var(--v);color:#fff}
-.bg2{background:var(--bg);border:1px solid var(--border);color:var(--text)}
-.br2{background:var(--ko-bg);border:1px solid var(--ko-bd);color:var(--ko)}
-.rr{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid #F3F4F6}
-.rr:last-child{border-bottom:none;font-weight:600}
-.rr span:first-child{color:var(--sub)}
-.notif{padding:10px 16px;border-radius:10px;font-size:13px;font-weight:500;margin-bottom:10px;display:none}
-.n-ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-bd);display:block}
-.n-err{background:var(--ko-bg);color:var(--ko);border:1px solid var(--ko-bd);display:block}
-
-/* SCANNER CAMERA */
-.cam-wrap{position:relative;width:100%;border-radius:12px;overflow:hidden;background:#000;aspect-ratio:1;margin-bottom:12px}
-#cam-video{width:100%;height:100%;object-fit:cover;display:block}
-.cam-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.cam-frame{width:65%;aspect-ratio:1;border:3px solid var(--cy);border-radius:12px;box-shadow:0 0 0 2000px rgba(0,0,0,.45)}
-.cam-corners::before,.cam-corners::after{content:"";position:absolute;width:20px;height:20px;border-color:var(--cy);border-style:solid}
-.cam-hint{text-align:center;font-size:13px;color:var(--sub);margin-bottom:12px}
-.res{border-radius:12px;padding:18px;text-align:center;margin-bottom:12px;display:none}
-.ri{font-size:44px;margin-bottom:6px}
-.rn{font-size:18px;font-weight:600;margin:4px 0}
-.rm{font-size:13px}
-.r-ok{background:var(--ok-bg);border:2px solid var(--ok-bd)}
-.r-ok .ri,.r-ok .rn{color:var(--ok)}.r-ok .rm{color:#047857}
-.r-ko{background:var(--ko-bg);border:2px solid var(--ko-bd)}
-.r-ko .ri,.r-ko .rn{color:var(--ko)}.r-ko .rm{color:#B91C1C}
-.r-wr{background:var(--warn-bg);border:2px solid var(--warn-bd)}
-.r-wr .ri,.r-wr .rn{color:var(--warn)}.r-wr .rm{color:#B45309}
-.scan-manual{display:flex;gap:8px;margin-top:10px}
-.scan-manual input{flex:1;padding:11px 13px;border:1px solid var(--border);border-radius:9px;font-size:15px;outline:none}
-.scan-manual input:focus{border-color:var(--v)}
-.scan-manual button{padding:0 18px;background:var(--v);border:none;border-radius:9px;color:#fff;font-size:13px;font-weight:600;cursor:pointer}
-.la{max-height:380px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.tr{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #F3F4F6}
-.tr:last-child{border-bottom:none}
-.bdg{font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap}
-.b-ok{background:var(--ok-bg);color:var(--ok)}
-.b-ko{background:var(--ko-bg);color:var(--ko)}
-.ti{flex:1;min-width:0}
-.tr-ref{font-size:12px;font-weight:600}
-.tr-nom{font-size:11px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tr-t{font-size:10px;color:var(--sub);white-space:nowrap}
-.tbs{display:flex;gap:4px}
-.tbs button{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 8px;cursor:pointer;font-size:12px;color:var(--sub)}
-.tbs .gb{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);font-weight:600}
-.empty{text-align:center;padding:28px 12px;color:var(--sub);font-size:13px}
-.empty .ei{font-size:30px;margin-bottom:6px}
-.csv-ta{width:100%;min-height:100px;font-family:monospace;font-size:11px;border:1px solid var(--border);border-radius:8px;padding:10px;background:var(--bg);resize:vertical;margin-top:8px;outline:none}
+.bl{display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:4px}
+.bg{height:7px;background:#EEE;border-radius:4px;overflow:hidden}
+.bf{height:100%;border-radius:4px;transition:width .3s}
+.fl{margin-bottom:10px}
+.fl label{display:block;font-size:12px;font-weight:600;color:#666;margin-bottom:4px}
+.fl input,.fl select{width:100%;padding:10px 12px;border:1px solid #DDD;border-radius:9px;font-size:15px;background:#fff;outline:none}
+.fl input:focus{border-color:#7B00FF}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:block;width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;text-align:center;-webkit-appearance:none}
+.bv{background:#7B00FF;color:#fff}
+.bg2{background:#F0F0F0;color:#333;border:1px solid #DDD}
+.br2{background:#FEE;color:#C00;border:1px solid #FBB}
+.rr{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid #F0F0F0}
+.rr:last-child{border-bottom:none;font-weight:700}
+.rr span:first-child{color:#888}
+.notif{padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px;display:none;text-align:center}
+.n-ok{background:#E8F5E9;color:#2E7D32;border:1px solid #A5D6A7;display:block}
+.n-err{background:#FFEBEE;color:#C62828;border:1px solid #EF9A9A;display:block}
+.scan-row{display:flex;gap:8px;margin-bottom:10px}
+.scan-row input{flex:1;padding:10px 12px;border:1px solid #DDD;border-radius:9px;font-size:15px;outline:none}
+.scan-row input:focus{border-color:#7B00FF}
+.scan-go{padding:0 18px;background:#7B00FF;border:none;border-radius:9px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;-webkit-appearance:none}
+.res{border-radius:12px;padding:18px;text-align:center;margin-bottom:12px;display:none}
+.ri{font-size:42px;display:block;margin-bottom:6px}
+.rn{font-size:18px;font-weight:700;margin:4px 0}
+.rm{font-size:13px;color:#666}
+.r-ok{background:#E8F5E9;border:2px solid #66BB6A}
+.r-ko{background:#FFEBEE;border:2px solid #EF5350}
+.r-wr{background:#FFF8E1;border:2px solid #FFCA28}
+.la{max-height:360px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.tr{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #F5F5F5}
+.tr:last-child{border-bottom:none}
+.bdg{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.b-ok{background:#E8F5E9;color:#2E7D32}
+.b-ko{background:#FFEBEE;color:#C62828}
+.ti{flex:1;min-width:0}
+.tr-r{font-size:12px;font-weight:700;color:#333}
+.tr-n{font-size:11px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tr-t{font-size:10px;color:#AAA;white-space:nowrap}
+.tbs{display:flex;gap:4px}
+.tbs button{background:none;border:1px solid #DDD;border-radius:6px;padding:4px 8px;font-size:12px;color:#666;cursor:pointer;-webkit-appearance:none}
+.tbs .gb{background:#E8F5E9;border-color:#66BB6A;color:#2E7D32;font-weight:700}
+.empty{text-align:center;padding:28px 12px;color:#AAA;font-size:13px}
+.empty .ei{font-size:28px;display:block;margin-bottom:6px}
+.csv-ta{width:100%;min-height:80px;font-family:monospace;font-size:11px;border:1px solid #DDD;border-radius:8px;padding:8px;background:#F8F8F8;resize:vertical;margin-top:8px;outline:none}
 .tc-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
 .tc-wrap canvas{border-radius:12px;max-width:100%;box-shadow:0 4px 16px rgba(0,0,0,.15)}
-.tc-hint{font-size:12px;color:var(--sub);text-align:center}
-#qr-tmp{position:fixed;left:-9999px;top:0;width:160px;height:160px;background:#fff}
-.tip{font-size:11px;color:var(--sub);margin-top:6px;line-height:1.5}
-.install-banner{background:var(--v);color:#fff;padding:12px 16px;font-size:13px;display:none;align-items:center;gap:10px;flex-shrink:0}
-.install-banner button{background:rgba(255,255,255,.2);border:none;color:#fff;padding:6px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
-.install-banner .ib-close{background:none;padding:4px;opacity:.7}
+.tc-hint{font-size:11px;color:#888;text-align:center}
+#qr-tmp{position:fixed;left:-9999px;top:0;width:180px;height:180px;background:#fff}
+.tip{font-size:11px;color:#AAA;margin-top:6px;line-height:1.5}
+.cam-wrap{position:relative;width:100%;border-radius:12px;overflow:hidden;background:#000;aspect-ratio:1;margin-bottom:10px}
+#cam-video{width:100%;height:100%;object-fit:cover}
+.cam-ol{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.cam-fr{width:60%;aspect-ratio:1;border:3px solid #00FFCC;border-radius:10px;box-shadow:0 0 0 2000px rgba(0,0,0,.5)}
 </style>
 </head>
 <body>
 
-<div class="install-banner" id="install-banner">
-  <span style="flex:1">📲 Installe l'app sur ton écran d'accueil pour l'utiliser hors ligne.</span>
-  <button id="install-btn" onclick="installApp()">Installer</button>
-  <button class="ib-close" onclick="document.getElementById('install-banner').style.display='none'">✕</button>
-</div>
-
 <div class="hdr">
-  <div class="hdr-title">🎉 KIFA Fluo Party — Billetterie</div>
-  <div class="hdr-time" id="clk">--:--:--</div>
+  <div class="hdr-t">🎉 KIFA Fluo Party</div>
+  <div class="hdr-c" id="clk">--:--:--</div>
 </div>
 
 <div class="nav">
-  <div class="nb act" id="t-dash" onclick="nav('dash')"><span class="ic">📊</span>Dashboard</div>
+  <div class="nb on" id="t-dash" onclick="nav('dash')"><span class="ic">📊</span>Dashboard</div>
   <div class="nb" id="t-scan" onclick="nav('scan')"><span class="ic">📷</span>Scanner</div>
   <div class="nb" id="t-list" onclick="nav('list')"><span class="ic">🎟️</span>Tickets</div>
   <div class="nb" id="t-gen" onclick="nav('gen')"><span class="ic">🖼️</span>Générer</div>
@@ -124,53 +103,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
   <div id="qr-tmp"></div>
 
   <!-- DASHBOARD -->
-  <div class="pane act" id="pane-dash">
+  <div class="pane on" id="pane-dash">
     <div class="kpi">
-      <div class="kb"><div class="kn" id="k-tot" style="color:var(--v)">0</div><div class="kl">Tickets créés</div></div>
-      <div class="kb"><div class="kn" id="k-ent" style="color:var(--ok)">0</div><div class="kl">Entrées validées</div></div>
-      <div class="kb"><div class="kn" id="k-att" style="color:var(--warn)">0</div><div class="kl">En attente</div></div>
-      <div class="kb"><div class="kn" id="k-fcfa" style="color:var(--ro)">0</div><div class="kl">FCFA encaissés</div></div>
+      <div class="kb"><div class="kn" id="k-tot" style="color:#7B00FF">0</div><div class="kl">Tickets créés</div></div>
+      <div class="kb"><div class="kn" id="k-ent" style="color:#2E7D32">0</div><div class="kl">Entrées validées</div></div>
+      <div class="kb"><div class="kn" id="k-att" style="color:#E65100">0</div><div class="kl">En attente</div></div>
+      <div class="kb"><div class="kn" id="k-fcfa" style="color:#C2185B">0</div><div class="kl">FCFA encaissés</div></div>
     </div>
     <div class="card">
       <div class="sec">Progression</div>
-      <div class="br"><div class="bl"><span>Taux d'entrée</span><span id="p1t">0%</span></div><div class="bg"><div class="bf" id="p1b" style="width:0%;background:var(--v)"></div></div></div>
-      <div class="br"><div class="bl"><span>Ventes / objectif 180</span><span id="p2t">0%</span></div><div class="bg"><div class="bf" id="p2b" style="width:0%;background:var(--or)"></div></div></div>
+      <div class="br"><div class="bl"><span>Taux d'entrée</span><span id="p1t">0%</span></div><div class="bg"><div class="bf" id="p1b" style="width:0%;background:#7B00FF"></div></div></div>
+      <div class="br"><div class="bl"><span>Ventes / objectif 180</span><span id="p2t">0%</span></div><div class="bg"><div class="bf" id="p2b" style="width:0%;background:#E65100"></div></div></div>
     </div>
     <div class="card">
       <div class="sec">Finances</div>
       <div class="rr"><span>Tarif</span><span>10 000 FCFA</span></div>
       <div class="rr"><span>Total encaissé</span><span id="f2">0 FCFA</span></div>
-      <div class="rr"><span>Entrés</span><span id="f3">0</span></div>
+      <div class="rr"><span>Participants entrés</span><span id="f3">0</span></div>
       <div class="rr"><span>Reste à encaisser</span><span id="f4">0 FCFA</span></div>
     </div>
-    <div class="card"><div class="sec">Dernières entrées</div><div id="d-rec"><div class="empty"><div class="ei">🕐</div>Aucune entrée encore.</div></div></div>
+    <div class="card"><div class="sec">Dernières entrées</div><div id="d-rec"><div class="empty"><span class="ei">🕐</span>Aucune entrée encore.</div></div></div>
   </div>
 
   <!-- SCANNER -->
   <div class="pane" id="pane-scan">
     <div class="card">
       <div class="sec">Scanner un ticket</div>
-      <div class="cam-wrap" id="cam-wrap">
-        <video id="cam-video" playsinline autoplay muted></video>
-        <div class="cam-overlay"><div class="cam-frame"></div></div>
-      </div>
-      <div class="cam-hint">Centre le QR code dans le cadre cyan</div>
+      <div class="cam-wrap"><video id="cam-video" playsinline autoplay muted></video><div class="cam-ol"><div class="cam-fr"></div></div></div>
       <div style="display:flex;gap:8px;margin-bottom:8px">
         <button class="btn bv" id="btn-cam" style="margin-top:0;flex:1" onclick="startCam()">📷 Activer la caméra</button>
-        <button class="btn bg2" id="btn-cam-stop" style="margin-top:0;flex:1;display:none" onclick="stopCam()">⏹ Arrêter</button>
+        <button class="btn bg2" id="btn-stop" style="margin-top:0;flex:1;display:none" onclick="stopCam()">⏹ Arrêter</button>
       </div>
-      <p style="font-size:11px;color:var(--sub);text-align:center;margin-bottom:10px">— ou entre la référence manuellement —</p>
-      <div class="scan-manual">
-        <input type="text" id="sc-in" placeholder="KFP-2026-0001 ou 0001" autocomplete="off"/>
-        <button id="sc-btn" onclick="valider(document.getElementById('sc-in').value)">✓</button>
+      <p class="tip" style="margin-bottom:10px;text-align:center">— ou entre la référence manuellement —</p>
+      <div class="scan-row">
+        <input type="text" id="sc-in" placeholder="KFP-2026-0001 ou 0001" autocomplete="off" onkeydown="if(event.key==='Enter')valider(this.value)"/>
+        <button class="scan-go" onclick="valider(document.getElementById('sc-in').value)">✓</button>
       </div>
     </div>
-    <div id="sc-res" class="res"></div>
+    <div class="res" id="sc-res"></div>
     <div class="kpi">
-      <div class="kb"><div class="kn" id="se" style="color:var(--ok)">0</div><div class="kl">Entrées</div></div>
-      <div class="kb"><div class="kn" id="sa" style="color:var(--warn)">0</div><div class="kl">En attente</div></div>
-      <div class="kb"><div class="kn" id="sk" style="color:var(--ko)">0</div><div class="kl">Refusés</div></div>
-      <div class="kb"><div class="kn" id="st" style="color:var(--v)">0</div><div class="kl">Total</div></div>
+      <div class="kb"><div class="kn" id="se" style="color:#2E7D32">0</div><div class="kl">Entrées</div></div>
+      <div class="kb"><div class="kn" id="sa" style="color:#E65100">0</div><div class="kl">En attente</div></div>
+      <div class="kb"><div class="kn" id="sk" style="color:#C62828">0</div><div class="kl">Refusés</div></div>
+      <div class="kb"><div class="kn" id="st" style="color:#7B00FF">0</div><div class="kl">Total</div></div>
     </div>
   </div>
 
@@ -179,19 +154,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
     <div class="card">
       <div class="sec">Liste des tickets</div>
       <div style="display:flex;gap:8px;margin-bottom:10px">
-        <input type="text" id="lq" placeholder="Rechercher..." oninput="drawList()" style="flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font-size:14px;outline:none"/>
-        <select id="lf" onchange="drawList()" style="width:110px;padding:10px;border:1px solid var(--border);border-radius:9px;font-size:13px;outline:none">
+        <input type="text" id="lq" placeholder="Rechercher..." oninput="drawList()" style="flex:1;padding:9px 12px;border:1px solid #DDD;border-radius:9px;font-size:14px;outline:none"/>
+        <select id="lf" onchange="drawList()" style="width:110px;padding:9px;border:1px solid #DDD;border-radius:9px;font-size:13px;outline:none">
           <option value="all">Tous</option>
           <option value="att">Attente</option>
           <option value="ent">Entrés</option>
         </select>
       </div>
-      <div class="la" id="l-body"><div class="empty"><div class="ei">🎟️</div>Aucun ticket créé.</div></div>
+      <div class="la" id="l-body"><div class="empty"><span class="ei">🎟️</span>Aucun ticket créé.</div></div>
     </div>
     <div class="card">
-      <div class="sec">Exporter CSV</div>
-      <button class="btn bg2" id="btn-csv" onclick="exportCSV()">⬇ Générer le CSV</button>
-      <textarea class="csv-ta" id="csv-out" readonly placeholder="Le CSV apparaîtra ici..."></textarea>
+      <div class="sec">Export CSV</div>
+      <button class="btn bg2" onclick="exportCSV()">⬇ Générer le CSV</button>
+      <textarea class="csv-ta" id="csv-out" readonly placeholder="CSV ici..."></textarea>
     </div>
   </div>
 
@@ -207,15 +182,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
         <div class="fl"><label>Nom</label><input type="text" id="gen-nom" placeholder="Kofi Mensah"/></div>
         <div class="fl"><label>N° ticket</label><input type="text" id="gen-num" placeholder="0001"/></div>
       </div>
-      <button class="btn bv" id="btn-gen" onclick="doGen()">🖼️ Générer le ticket</button>
+      <button class="btn bv" onclick="doGen()">🖼️ Générer le ticket</button>
     </div>
     <div id="gen-res" style="display:none">
       <div class="card">
-        <div class="sec">Aperçu — maintenir appuyé pour enregistrer</div>
+        <div class="sec">Aperçu du ticket</div>
         <div class="tc-wrap">
-          <canvas id="tc" width="600" height="990"></canvas>
-          <button class="btn bv" id="btn-dl" style="margin-top:4px;max-width:320px" onclick="dlTicket()">⬇ Enregistrer le ticket</button>
-<p class="tc-hint">Ou maintiens appuyé sur le ticket → Enregistrer l'image</p>
+          <canvas id="tc"></canvas>
+          <button class="btn bv" style="max-width:280px" onclick="dlTicket()">⬇ Enregistrer le ticket</button>
+          <p class="tc-hint">Ou maintiens appuyé sur le ticket → Enregistrer l'image</p>
         </div>
       </div>
     </div>
@@ -229,7 +204,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
         <div class="fl"><label>Prénom et Nom</label><input type="text" id="an" placeholder="Kofi Mensah" maxlength="30"/></div>
         <div class="fl"><label>N° (auto si vide)</label><input type="text" id="anum" placeholder="0001" maxlength="6"/></div>
       </div>
-      <button class="btn bv" id="btn-create" onclick="creerTicket()">+ Créer le ticket</button>
+      <button class="btn bv" onclick="creerTicket()">+ Créer le ticket</button>
     </div>
     <div class="card">
       <div class="sec">Créer plusieurs tickets</div>
@@ -238,34 +213,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
         <div class="fl"><label>Nom</label><input type="text" id="bn" placeholder="Konan"/></div>
       </div>
       <div class="fl"><label>Quantité (max 50)</label><input type="number" id="bq" value="1" min="1" max="50"/></div>
-      <button class="btn bg2" id="btn-batch" onclick="creerBatch()">⧉ Créer les tickets</button>
+      <button class="btn bg2" onclick="creerBatch()">⧉ Créer les tickets</button>
     </div>
     <div class="card">
       <div class="sec">Réinitialiser une entrée</div>
-      <div class="fl"><label>Référence ticket</label><input type="text" id="rref" placeholder="KFP-2026-0001"/></div>
-      <button class="btn bg2" id="btn-reinit" onclick="reinit()">↺ Réinitialiser</button>
+      <div class="fl"><label>Référence</label><input type="text" id="rref" placeholder="KFP-2026-0001"/></div>
+      <button class="btn bg2" onclick="reinit()">↺ Réinitialiser</button>
     </div>
     <div class="card">
-      <div class="sec" style="color:var(--ko)">Zone danger</div>
-      <button class="btn br2" id="btn-vider" onclick="vider()">🗑 Supprimer tous les tickets</button>
+      <div class="sec" style="color:#C62828">Zone danger</div>
+      <button class="btn br2" onclick="vider()">🗑 Supprimer tous les tickets</button>
     </div>
   </div>
+
 </div>
 
 <script>
 var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t++]=g[j][m]);for(var m=0;e>m;m++)for(var j=0;j<b.length;j++)m<h[j].length&&(s[t++]=h[j][m]);return s};for(var c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},d={L:1,M:0,Q:3,H:2},e={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},f={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(a){for(var b=a<<10;f.getBCHDigit(b)-f.getBCHDigit(f.G15)>=0;)b^=f.G15<<f.getBCHDigit(b)-f.getBCHDigit(f.G15);return(a<<10|b)^f.G15_MASK},getBCHTypeNumber:function(a){for(var b=a<<12;f.getBCHDigit(b)-f.getBCHDigit(f.G18)>=0;)b^=f.G18<<f.getBCHDigit(b)-f.getBCHDigit(f.G18);return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getPatternPosition:function(a){return f.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case e.PATTERN000:return 0==(b+c)%2;case e.PATTERN001:return 0==b%2;case e.PATTERN010:return 0==c%3;case e.PATTERN011:return 0==(b+c)%3;case e.PATTERN100:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case e.PATTERN101:return 0==b*c%2+b*c%3;case e.PATTERN110:return 0==(b*c%2+b*c%3)%2;case e.PATTERN111:return 0==(b*c%3+(b+c)%2)%2;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){for(var b=new i([1],0),c=0;a>c;c++)b=b.multiply(new i([1,g.gexp(c)],0));return b},getLengthInBits:function(a,b){if(b>=1&&10>b)switch(a){case c.MODE_NUMBER:return 10;case c.MODE_ALPHA_NUM:return 9;case c.MODE_8BIT_BYTE:return 8;case c.MODE_KANJI:return 8;default:throw new Error("mode:"+a)}else if(27>b)switch(a){case c.MODE_NUMBER:return 12;case c.MODE_ALPHA_NUM:return 11;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 10;default:throw new Error("mode:"+a)}else{if(!(41>b))throw new Error("type:"+b);switch(a){case c.MODE_NUMBER:return 14;case c.MODE_ALPHA_NUM:return 13;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 12;default:throw new Error("mode:"+a)}}},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;b>d;d++)for(var e=0;b>e;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||d+h>=b))for(var i=-1;1>=i;i++)0>e+i||e+i>=b||(0!=h||0!=i)&&g==a.isDark(d+h,e+i)&&f++;f>5&&(c+=3+f-5)}for(var d=0;b-1>d;d++)for(var e=0;b-1>e;e++){var j=0;a.isDark(d,e)&&j++,a.isDark(d+1,e)&&j++,a.isDark(d,e+1)&&j++,a.isDark(d+1,e+1)&&j++,(0==j||4==j)&&(c+=3)}for(var d=0;b>d;d++)for(var e=0;b-6>e;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(var e=0;b>e;e++)for(var d=0;b-6>d;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(var k=0,e=0;b>e;e++)for(var d=0;b>d;d++)a.isDark(d,e)&&k++;var l=Math.abs(100*k/b/b-50)/5;return c+=10*l}},g={glog:function(a){if(1>a)throw new Error("glog("+a+")");return g.LOG_TABLE[a]},gexp:function(a){for(;0>a;)a+=255;for(;a>=256;)a-=255;return g.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)},h=0;8>h;h++)g.EXP_TABLE[h]=1<<h;for(var h=8;256>h;h++)g.EXP_TABLE[h]=g.EXP_TABLE[h-4]^g.EXP_TABLE[h-5]^g.EXP_TABLE[h-6]^g.EXP_TABLE[h-8];for(var h=0;255>h;h++)g.LOG_TABLE[g.EXP_TABLE[h]]=h;i.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=new Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=g.gexp(g.glog(this.get(c))+g.glog(a.get(d)));return new i(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;for(var b=g.glog(this.get(0))-g.glog(a.get(0)),c=new Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(var d=0;d<a.getLength();d++)c[d]^=g.gexp(g.glog(a.get(d))+b);return new i(c,0).mod(a)}},j.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],j.getRSBlocks=function(a,b){var c=j.getRsBlockTable(a,b);if(void 0==c)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;d>f;f++)for(var g=c[3*f+0],h=c[3*f+1],i=c[3*f+2],k=0;g>k;k++)e.push(new j(h,i));return e},j.getRsBlockTable=function(a,b){switch(b){case d.L:return j.RS_BLOCK_TABLE[4*(a-1)+0];case d.M:return j.RS_BLOCK_TABLE[4*(a-1)+1];case d.Q:return j.RS_BLOCK_TABLE[4*(a-1)+2];case d.H:return j.RS_BLOCK_TABLE[4*(a-1)+3];default:return void 0}},k.prototype={get:function(a){var b=Math.floor(a/8);return 1==(1&this.buffer[b]>>>7-a%8)},put:function(a,b){for(var c=0;b>c;c++)this.putBit(1==(1&a>>>b-c-1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0),a&&(this.buffer[b]|=128>>>this.length%8),this.length++}};var l=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,194],[520,412,292,220],[586,450,322,250],[644,504,364,280],[718,560,394,310],[792,624,442,338],[858,666,482,382],[929,711,509,403],[1003,779,565,439],[1091,857,611,461],[1171,911,661,511],[1273,997,715,535],[1367,1059,751,593],[1465,1125,805,625],[1528,1190,868,658],[1628,1264,908,698],[1732,1370,982,742],[1840,1452,1030,790],[1952,1538,1112,842],[2068,1628,1168,898],[2188,1722,1228,958],[2303,1809,1283,983],[2431,1911,1351,1051],[2563,1989,1423,1093],[2699,2099,1499,1139],[2809,2213,1579,1219],[2953,2331,1663,1273]],o=function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){function g(a,b){var c=document.createElementNS("http://www.w3.org/2000/svg",a);for(var d in b)b.hasOwnProperty(d)&&c.setAttribute(d,b[d]);return c}var b=this._htOption,c=this._el,d=a.getModuleCount();Math.floor(b.width/d),Math.floor(b.height/d),this.clear();var h=g("svg",{viewBox:"0 0 "+String(d)+" "+String(d),width:"100%",height:"100%",fill:b.colorLight});h.setAttributeNS("http://www.w3.org/2000/xmlns/","xmlns:xlink","http://www.w3.org/1999/xlink"),c.appendChild(h),h.appendChild(g("rect",{fill:b.colorDark,width:"1",height:"1",id:"template"}));for(var i=0;d>i;i++)for(var j=0;d>j;j++)if(a.isDark(i,j)){var k=g("use",{x:String(i),y:String(j)});k.setAttributeNS("http://www.w3.org/1999/xlink","href","#template"),h.appendChild(k)}},a.prototype.clear=function(){for(;this._el.hasChildNodes();)this._el.removeChild(this._el.lastChild)},a}(),p="svg"===document.documentElement.tagName.toLowerCase(),q=p?o:m()?function(){function a(){this._elImage.src=this._elCanvas.toDataURL("image/png"),this._elImage.style.display="block",this._elCanvas.style.display="none"}function d(a,b){var c=this;if(c._fFail=b,c._fSuccess=a,null===c._bSupportDataURI){var d=document.createElement("img"),e=function(){c._bSupportDataURI=!1,c._fFail&&_fFail.call(c)},f=function(){c._bSupportDataURI=!0,c._fSuccess&&c._fSuccess.call(c)};return d.onabort=e,d.onerror=e,d.onload=f,d.src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",void 0}c._bSupportDataURI===!0&&c._fSuccess?c._fSuccess.call(c):c._bSupportDataURI===!1&&c._fFail&&c._fFail.call(c)}if(this._android&&this._android<=2.1){var b=1/window.devicePixelRatio,c=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(a,d,e,f,g,h,i,j){if("nodeName"in a&&/img/i.test(a.nodeName))for(var l=arguments.length-1;l>=1;l--)arguments[l]=arguments[l]*b;else"undefined"==typeof j&&(arguments[1]*=b,arguments[2]*=b,arguments[3]*=b,arguments[4]*=b);c.apply(this,arguments)}}var e=function(a,b){this._bIsPainted=!1,this._android=n(),this._htOption=b,this._elCanvas=document.createElement("canvas"),this._elCanvas.width=b.width,this._elCanvas.height=b.height,a.appendChild(this._elCanvas),this._el=a,this._oContext=this._elCanvas.getContext("2d"),this._bIsPainted=!1,this._elImage=document.createElement("img"),this._elImage.style.display="none",this._el.appendChild(this._elImage),this._bSupportDataURI=null};return e.prototype.draw=function(a){var b=this._elImage,c=this._oContext,d=this._htOption,e=a.getModuleCount(),f=d.width/e,g=d.height/e,h=Math.round(f),i=Math.round(g);b.style.display="none",this.clear();for(var j=0;e>j;j++)for(var k=0;e>k;k++){var l=a.isDark(j,k),m=k*f,n=j*g;c.strokeStyle=l?d.colorDark:d.colorLight,c.lineWidth=1,c.fillStyle=l?d.colorDark:d.colorLight,c.fillRect(m,n,f,g),c.strokeRect(Math.floor(m)+.5,Math.floor(n)+.5,h,i),c.strokeRect(Math.ceil(m)-.5,Math.ceil(n)-.5,h,i)}this._bIsPainted=!0},e.prototype.makeImage=function(){this._bIsPainted&&d.call(this,a)},e.prototype.isPainted=function(){return this._bIsPainted},e.prototype.clear=function(){this._oContext.clearRect(0,0,this._elCanvas.width,this._elCanvas.height),this._bIsPainted=!1},e.prototype.round=function(a){return a?Math.floor(1e3*a)/1e3:a},e}():function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){for(var b=this._htOption,c=this._el,d=a.getModuleCount(),e=Math.floor(b.width/d),f=Math.floor(b.height/d),g=['<table style="border:0;border-collapse:collapse;">'],h=0;d>h;h++){g.push("<tr>");for(var i=0;d>i;i++)g.push('<td style="border:0;border-collapse:collapse;padding:0;margin:0;width:'+e+"px;height:"+f+"px;background-color:"+(a.isDark(h,i)?b.colorDark:b.colorLight)+';"></td>');g.push("</tr>")}g.push("</table>"),c.innerHTML=g.join("");var j=c.childNodes[0],k=(b.width-j.offsetWidth)/2,l=(b.height-j.offsetHeight)/2;k>0&&l>0&&(j.style.margin=l+"px "+k+"px")},a.prototype.clear=function(){this._el.innerHTML=""},a}();QRCode=function(a,b){if(this._htOption={width:256,height:256,typeNumber:4,colorDark:"#000000",colorLight:"#ffffff",correctLevel:d.H},"string"==typeof b&&(b={text:b}),b)for(var c in b)this._htOption[c]=b[c];"string"==typeof a&&(a=document.getElementById(a)),this._android=n(),this._el=a,this._oQRCode=null,this._oDrawing=new q(this._el,this._htOption),this._htOption.text&&this.makeCode(this._htOption.text)},QRCode.prototype.makeCode=function(a){this._oQRCode=new b(r(a,this._htOption.correctLevel),this._htOption.correctLevel),this._oQRCode.addData(a),this._oQRCode.make(),this._el.title=a,this._oDrawing.draw(this._oQRCode),this.makeImage()},QRCode.prototype.makeImage=function(){"function"==typeof this._oDrawing.makeImage&&(!this._android||this._android>=3)&&this._oDrawing.makeImage()},QRCode.prototype.clear=function(){this._oDrawing.clear()},QRCode.CorrectLevel=d}();
 </script>
-<!-- jsQR removed for mobile performance -->
 <script>
-// Expose all functions globally BEFORE DOM loads
-
-
-var DB={}, scanKo=0, ntimer=null, SK='kifa_fluo_pwa';
-var stream=null, scanActive=false, scanLoop=null;
-var CYAN='#00FFCC',VIOLET='#7B00FF',ROSE='#FF006E',OR='#C9A84C',BLANC='#FFFFFF',DNOIR='#080818';
+var DB={}, scanKo=0, SK='kifa_fluo_v11';
+var stream=null, scanActive=false, scanLoop=null, jsqrLoaded=false;
+var ntimer=null;
 
 function dbSave(){try{localStorage.setItem(SK,JSON.stringify(DB));}catch(e){}}
-function dbLoad(){try{var d=localStorage.getItem(SK);if(d){DB=JSON.parse(d);}}catch(e){DB={};}}
+function dbLoad(){try{var d=localStorage.getItem(SK);if(d)DB=JSON.parse(d);}catch(e){DB={};}}
 
 function notif(msg,type){
   var el=document.getElementById('notif');
@@ -275,10 +247,10 @@ function notif(msg,type){
   ntimer=setTimeout(function(){el.className='notif';},3500);
 }
 
-window.nav=function(p){
+function nav(p){
   ['dash','scan','list','gen','adm'].forEach(function(x){
-    document.getElementById('t-'+x).className='nb'+(x===p?' act':'');
-    document.getElementById('pane-'+x).className='pane'+(x===p?' act':'');
+    document.getElementById('t-'+x).className='nb'+(x===p?' on':'');
+    document.getElementById('pane-'+x).className='pane'+(x===p?' on':'');
   });
   if(p==='dash')drawDash();
   if(p==='scan')drawScanKpi();
@@ -288,9 +260,7 @@ window.nav=function(p){
 }
 
 function nextNum(){
-  var nums=Object.keys(DB).map(function(k){
-    var p=k.split('-'); return parseInt(p[p.length-1])||0;
-  }).filter(function(n){return n>0;});
+  var nums=Object.keys(DB).map(function(k){var p=k.split('-');return parseInt(p[p.length-1])||0;}).filter(function(n){return n>0;});
   return nums.length?Math.max.apply(null,nums)+1:1;
 }
 
@@ -307,13 +277,12 @@ function drawDash(){
   document.getElementById('f2').textContent=(tot*10000).toLocaleString('fr-FR')+' FCFA';
   document.getElementById('f3').textContent=ent;
   document.getElementById('f4').textContent=(att*10000).toLocaleString('fr-FR')+' FCFA';
-  var rec=all.filter(function(t){return t.scanned;})
-    .sort(function(a,b){return new Date(b.scanned_at)-new Date(a.scanned_at);}).slice(0,5);
+  var rec=all.filter(function(t){return t.scanned;}).sort(function(a,b){return new Date(b.scanned_at)-new Date(a.scanned_at);}).slice(0,5);
   var el=document.getElementById('d-rec');
-  if(!rec.length){el.innerHTML='<div class="empty"><div class="ei">🕐</div>Aucune entrée encore.</div>';return;}
+  if(!rec.length){el.innerHTML='<div class="empty"><span class="ei">🕐</span>Aucune entrée encore.</div>';return;}
   el.innerHTML=rec.map(function(t){
     var h=new Date(t.scanned_at).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-    return '<div class="tr"><span class="bdg b-ok">Entré</span><div class="ti"><div class="tr-ref">'+t.ref+'</div><div class="tr-nom">'+t.nom+'</div></div><div class="tr-t">'+h+'</div></div>';
+    return '<div class="tr"><span class="bdg b-ok">Entré</span><div class="ti"><div class="tr-r">'+t.ref+'</div><div class="tr-n">'+t.nom+'</div></div><div class="tr-t">'+h+'</div></div>';
   }).join('');
 }
 
@@ -325,45 +294,39 @@ function drawScanKpi(){
   document.getElementById('sk').textContent=scanKo;
 }
 
-window.valider=function(ref){
+function valider(ref){
   if(!ref)return;
   ref=ref.trim().toUpperCase();
-  if(ref.indexOf('KFP-')!==0) ref='KFP-2026-'+ref.replace(/\D/g,'').padStart(4,'0');
+  if(ref.indexOf('KFP-')!==0)ref='KFP-2026-'+ref.replace(/\D/g,'').padStart(4,'0');
   var t=DB[ref],el=document.getElementById('sc-res');
   el.style.display='block';
   if(!t){
-    scanKo++;
-    el.className='res r-wr';
-    el.innerHTML='<div class="ri">⚠️</div><div class="rn">Ticket inconnu</div><div class="rm">'+ref+' introuvable.</div>';
-  } else if(t.scanned){
+    scanKo++;el.className='res r-wr';
+    el.innerHTML='<span class="ri">⚠️</span><div class="rn">Ticket inconnu</div><div class="rm">'+ref+' introuvable.</div>';
+  }else if(t.scanned){
     scanKo++;
     var h=new Date(t.scanned_at).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
     el.className='res r-ko';
-    el.innerHTML='<div class="ri">🚫</div><div class="rn">'+t.nom+'</div><div class="rm">Déjà scanné à '+h+'</div>';
-  } else {
-    t.scanned=true; t.scanned_at=new Date().toISOString(); DB[ref]=t; dbSave();
+    el.innerHTML='<span class="ri">🚫</span><div class="rn">'+t.nom+'</div><div class="rm">Déjà scanné à '+h+'</div>';
+  }else{
+    t.scanned=true;t.scanned_at=new Date().toISOString();DB[ref]=t;dbSave();
     el.className='res r-ok';
-    el.innerHTML='<div class="ri">✅</div><div class="rn">'+t.nom+'</div><div class="rm">Accès autorisé — bonne soirée !</div>';
+    el.innerHTML='<span class="ri">✅</span><div class="rn">'+t.nom+'</div><div class="rm">Accès autorisé — bonne soirée !</div>';
     document.getElementById('sc-in').value='';
   }
   drawScanKpi();
   setTimeout(function(){el.style.display='none';},7000);
 }
 
-var jsqrLoaded=false;
-window.startCam=function(){
+function startCam(){
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
-    notif('Caméra non disponible — entre la référence manuellement.','err'); return;
+    notif('Caméra non disponible — entre la référence manuellement.','err');return;
   }
-  if(jsqrLoaded){
-    doStartCam(); return;
-  }
-  // Load jsQR lazily
+  if(jsqrLoaded){doStartCam();return;}
   notif('Chargement du scanner...','ok');
-  var s=document.createElement('script');
-  s.src='jsqr.js';
-  s.onload=function(){ jsqrLoaded=true; doStartCam(); };
-  s.onerror=function(){ notif('Scanner non disponible — entre la référence manuellement.','err'); };
+  var s=document.createElement('script');s.src='jsqr.js';
+  s.onload=function(){jsqrLoaded=true;doStartCam();};
+  s.onerror=function(){notif('Scanner non disponible.','err');};
   document.head.appendChild(s);
 }
 
@@ -371,48 +334,42 @@ function doStartCam(){
   navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false})
   .then(function(s){
     stream=s;
-    var vid=document.getElementById('cam-video');
-    vid.srcObject=s; vid.play();
+    var v=document.getElementById('cam-video');v.srcObject=s;v.play();
     document.getElementById('btn-cam').style.display='none';
-    document.getElementById('btn-cam-stop').style.display='block';
-    scanActive=true; scanQR();
-  }).catch(function(){
-    notif('Autorise la caméra dans Chrome.','err');
-  });
+    document.getElementById('btn-stop').style.display='block';
+    scanActive=true;scanQR();
+  }).catch(function(){notif('Autorise la caméra dans Chrome.','err');});
 }
 
-window.stopCam=function(){
+function stopCam(){
   scanActive=false;
   if(scanLoop){cancelAnimationFrame(scanLoop);scanLoop=null;}
   if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}
-  var vid=document.getElementById('cam-video');
-  vid.srcObject=null;
+  document.getElementById('cam-video').srcObject=null;
   document.getElementById('btn-cam').style.display='block';
-  document.getElementById('btn-cam-stop').style.display='none';
+  document.getElementById('btn-stop').style.display='none';
 }
 
 function scanQR(){
   if(!scanActive||!jsqrLoaded)return;
-  var vid=document.getElementById('cam-video');
-  if(vid.readyState===vid.HAVE_ENOUGH_DATA){
-    var cvs=document.createElement('canvas');
-    cvs.width=vid.videoWidth; cvs.height=vid.videoHeight;
-    var ctx=cvs.getContext('2d');
-    ctx.drawImage(vid,0,0,cvs.width,cvs.height);
+  var v=document.getElementById('cam-video');
+  if(v.readyState===v.HAVE_ENOUGH_DATA){
+    var c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;
+    var ctx=c.getContext('2d');ctx.drawImage(v,0,0,c.width,c.height);
     try{
-      var img=ctx.getImageData(0,0,cvs.width,cvs.height);
-      var code=jsQR(img.data,img.width,img.height,{inversionAttempts:'dontInvert'});
+      var d=ctx.getImageData(0,0,c.width,c.height);
+      var code=jsQR(d.data,d.width,d.height,{inversionAttempts:'dontInvert'});
       if(code&&code.data){
         var parts=code.data.split(' | ');
-        var ref=parts.length>1?parts[1]:code.data;
-        valider(ref); stopCam(); return;
+        valider(parts.length>1?parts[1]:code.data);
+        stopCam();return;
       }
     }catch(e){}
   }
   scanLoop=requestAnimationFrame(scanQR);
 }
 
-window.creerTicket=function(){
+function creerTicket(){
   var nom=document.getElementById('an').value.trim();
   if(!nom){notif('Entre le nom du participant.','err');return;}
   var numRaw=document.getElementById('anum').value.trim();
@@ -421,41 +378,39 @@ window.creerTicket=function(){
   if(DB[ref]){notif(ref+' existe déjà.','err');return;}
   DB[ref]={ref:ref,nom:nom,scanned:false,scanned_at:null,created_at:new Date().toISOString()};
   dbSave();
-  document.getElementById('an').value=''; document.getElementById('anum').value='';
+  document.getElementById('an').value='';document.getElementById('anum').value='';
   notif('Ticket '+ref+' créé pour '+nom+'.','ok');
-  drawDash(); fillSel();
+  drawDash();fillSel();
 }
 
-window.creerBatch=function(){
-  var p=document.getElementById('bp').value.trim();
-  var n=document.getElementById('bn').value.trim();
+function creerBatch(){
+  var p=document.getElementById('bp').value.trim(),n=document.getElementById('bn').value.trim();
   var q=Math.min(parseInt(document.getElementById('bq').value)||1,50);
   if(!p||!n){notif('Entre prénom et nom.','err');return;}
   var next=nextNum();
   for(var i=0;i<q;i++){
     var num=String(next++).padStart(4,'0'),ref='KFP-2026-'+num;
-    var nom=q===1?p+' '+n:p+' '+n+' '+(i+1);
-    DB[ref]={ref:ref,nom:nom,scanned:false,scanned_at:null,created_at:new Date().toISOString()};
+    DB[ref]={ref:ref,nom:q===1?p+' '+n:p+' '+n+' '+(i+1),scanned:false,scanned_at:null,created_at:new Date().toISOString()};
   }
   dbSave();
-  document.getElementById('bp').value=''; document.getElementById('bn').value=''; document.getElementById('bq').value='1';
-  notif(q+' ticket(s) créé(s).','ok'); drawDash(); fillSel();
+  document.getElementById('bp').value='';document.getElementById('bn').value='';document.getElementById('bq').value='1';
+  notif(q+' ticket(s) créé(s).','ok');drawDash();fillSel();
 }
 
-window.reinit=function(){
+function reinit(){
   var ref=document.getElementById('rref').value.trim().toUpperCase();
   if(!ref)return;
   if(!DB[ref]){notif(ref+' introuvable.','err');return;}
-  DB[ref].scanned=false; DB[ref].scanned_at=null; dbSave();
+  DB[ref].scanned=false;DB[ref].scanned_at=null;dbSave();
   notif(ref+' réinitialisé.','ok');
 }
 
-window.vider=function(){
+function vider(){
   if(!confirm('Supprimer TOUS les tickets ?'))return;
-  DB={}; dbSave(); drawDash(); drawList(); fillSel(); notif('Base vidée.','ok');
+  DB={};dbSave();drawDash();drawList();fillSel();notif('Base vidée.','ok');
 }
 
-window.drawList=function(){
+function drawList(){
   var q=document.getElementById('lq')?document.getElementById('lq').value.toLowerCase():'';
   var f=document.getElementById('lf')?document.getElementById('lf').value:'all';
   var all=Object.values(DB);
@@ -464,29 +419,22 @@ window.drawList=function(){
   if(f==='ent')all=all.filter(function(t){return t.scanned;});
   all.sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at);});
   var el=document.getElementById('l-body');
-  if(!all.length){el.innerHTML='<div class="empty"><div class="ei">🔍</div>Aucun résultat.</div>';return;}
+  if(!all.length){el.innerHTML='<div class="empty"><span class="ei">🔍</span>Aucun résultat.</div>';return;}
   el.innerHTML=all.map(function(t){
     var h=t.scanned_at?new Date(t.scanned_at).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}):'';
-    var rb=t.scanned?'<button onclick="reinitRow(\''+t.ref+'\')">↺</button>':'';
+    var rb=t.scanned?'<button onclick="reinitRow(''+t.ref+'')">↺</button>':'';
     return '<div class="tr"><span class="bdg '+(t.scanned?'b-ko':'b-ok')+'">'+(t.scanned?'Entré':'Attente')+'</span>'+
-      '<div class="ti"><div class="tr-ref">'+t.ref+'</div><div class="tr-nom">'+t.nom+'</div></div>'+
+      '<div class="ti"><div class="tr-r">'+t.ref+'</div><div class="tr-n">'+t.nom+'</div></div>'+
       '<div class="tr-t">'+h+'</div>'+
-      '<div class="tbs"><button class="gb" onclick="genFromList(\''+t.ref+'\')">🖼</button>'+rb+
-      '<button onclick="delRow(\''+t.ref+'\')">🗑</button></div></div>';
+      '<div class="tbs"><button class="gb" onclick="genFromList(''+t.ref+'')">🖼</button>'+rb+
+      '<button onclick="delRow(''+t.ref+'')">🗑</button></div></div>';
   }).join('');
 }
 
-window.reinitRow=function(ref){
-  if(!DB[ref])return;
-  DB[ref].scanned=false; DB[ref].scanned_at=null; dbSave(); drawList(); notif(ref+' réinitialisé.','ok');
-}
+function reinitRow(ref){if(!DB[ref])return;DB[ref].scanned=false;DB[ref].scanned_at=null;dbSave();drawList();notif(ref+' réinitialisé.','ok');}
+function delRow(ref){if(!confirm('Supprimer '+ref+' ?'))return;delete DB[ref];dbSave();drawList();fillSel();notif(ref+' supprimé.','ok');}
 
-window.delRow=function(ref){
-  if(!confirm('Supprimer '+ref+' ?'))return;
-  delete DB[ref]; dbSave(); drawList(); fillSel(); notif(ref+' supprimé.','ok');
-}
-
-window.exportCSV=function(){
+function exportCSV(){
   var all=Object.values(DB);
   if(!all.length){notif('Aucun ticket.','err');return;}
   var lines=['Référence,Nom,Statut,Heure scan'];
@@ -494,22 +442,20 @@ window.exportCSV=function(){
     var h=t.scanned_at?new Date(t.scanned_at).toLocaleString('fr-FR'):'';
     lines.push(t.ref+',"'+t.nom+'",'+(t.scanned?'Entré':'En attente')+',"'+h+'"');
   });
-  var ta=document.getElementById('csv-out');
-  ta.value=lines.join('\n'); ta.select();
-  notif('CSV prêt — copie et colle dans Excel.','ok');
+  var ta=document.getElementById('csv-out');ta.value=lines.join('\n');ta.select();
+  notif('CSV prêt — Ctrl+A puis Ctrl+C pour copier.','ok');
 }
 
 function fillSel(){
   var sel=document.getElementById('gen-sel'),cur=sel.value;
   sel.innerHTML='<option value="">— Sélectionner —</option>';
   Object.values(DB).sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at);}).forEach(function(t){
-    var o=document.createElement('option');
-    o.value=t.ref; o.textContent=t.ref+' — '+t.nom;
-    if(t.ref===cur)o.selected=true; sel.appendChild(o);
+    var o=document.createElement('option');o.value=t.ref;o.textContent=t.ref+' — '+t.nom;
+    if(t.ref===cur)o.selected=true;sel.appendChild(o);
   });
 }
 
-window.onSel=function(){
+function onSel(){
   var ref=document.getElementById('gen-sel').value;
   if(!ref||!DB[ref])return;
   var t=DB[ref],parts=t.ref.split('-');
@@ -517,314 +463,180 @@ window.onSel=function(){
   document.getElementById('gen-num').value=parts[parts.length-1];
 }
 
-window.genFromList=function(ref){
-  if(!DB[ref])return; nav('gen');
-  document.getElementById('gen-sel').value=ref; onSel(); doGen();
-}
+function genFromList(ref){if(!DB[ref])return;nav('gen');document.getElementById('gen-sel').value=ref;onSel();doGen();}
 
-window.doGen=function(){
+function doGen(){
   var nom=document.getElementById('gen-nom').value.trim()||'Participant';
   var numRaw=document.getElementById('gen-num').value.trim()||'0001';
   var ref='KFP-2026-'+numRaw.padStart(4,'0');
   var qrData='KIFA FLUO PARTY | '+ref+' | '+nom+' | 8 JUILLET 2026 | KIFA ROOFTOP BINGERVILLE';
-
-  // Step 1: Create a temp div and render QR there
-  var div=document.getElementById('qr-tmp');
-  div.innerHTML='';
-  div.style.cssText='position:fixed;left:-9999px;top:0;width:200px;height:200px;background:#fff;';
-
-  // Step 2: Use QRCode to render into div (creates canvas internally)
-  new QRCode(div,{
-    text:qrData,
-    width:200,height:200,
-    colorDark:'#000000',
-    colorLight:'#ffffff',
-    correctLevel:QRCode.CorrectLevel.H
-  });
-
-  // Step 3: After render, get the canvas QRCode created
-  function getQRAndRender(attempt){
+  var div=document.getElementById('qr-tmp');div.innerHTML='';
+  new QRCode(div,{text:qrData,width:180,height:180,colorDark:'#000',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.H});
+  setTimeout(function(){
     var qc=div.querySelector('canvas');
-    if(qc && qc.width>0){
-      // Got the QR canvas - draw ticket with it
-      renderTicket(nom,ref,qc);
-      document.getElementById('gen-res').style.display='block';
-      return;
-    }
-    // Try img tag (some browsers use img)
     var qi=div.querySelector('img');
-    if(qi && qi.complete && qi.naturalWidth>0){
-      renderTicket(nom,ref,qi);
-      document.getElementById('gen-res').style.display='block';
-      return;
-    }
-    if(attempt<30){
-      setTimeout(function(){getQRAndRender(attempt+1);},100);
-    } else {
-      // Last resort: draw ticket without QR, show message
-      renderTicket(nom,ref,null);
-      document.getElementById('gen-res').style.display='block';
-    }
+    if(qi&&qi.complete&&qi.naturalWidth>0){renderTicket(nom,ref,qi);}
+    else if(qc){renderTicket(nom,ref,qc);}
+    else{renderTicket(nom,ref,null);}
+    document.getElementById('gen-res').style.display='block';
+  },800);
+}
+
+function dlTicket(){
+  var c=document.getElementById('tc');
+  if(!c||c.width===0){notif('Génère un ticket d\'abord.','err');return;}
+  var nom=(document.getElementById('gen-nom').value||'ticket').trim().replace(/\s+/g,'_');
+  var num=(document.getElementById('gen-num').value||'0000').trim();
+  try{
+    var a=document.createElement('a');
+    a.download='Ticket_KIFA_'+nom+'_'+num+'.png';
+    a.href=c.toDataURL('image/png');
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    notif('Ticket téléchargé !','ok');
+  }catch(e){
+    var w=window.open('');
+    w.document.write('<img src="'+c.toDataURL('image/png')+'" style="max-width:100%">');
+    w.document.close();
   }
-  setTimeout(function(){getQRAndRender(0);},300);
+}
+
+function rr(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
 }
 
 function renderTicket(nom,ref,qrImg){
   var c=document.getElementById('tc'),W=600,H=1000;
   c.width=W;c.height=H;
   var ctx=c.getContext('2d');
-  ctx.clearRect(0,0,W,H);
+  var JAUNE='#FFEE00',ROSE='#FF2D9B',CYAN='#00FFCC',BLANC='#FFFFFF',OR='#C9A84C';
 
-  // === FOND PRINCIPAL NOIR ===
-  ctx.fillStyle='#000000';
-  ctx.fillRect(0,0,W,H);
+  // Fond noir
+  ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
 
-  // === IMAGE DE FOND (femme afro + palmier) ===
-  var bgImg=new Image();
-  bgImg.onload=function(){
-    // Draw background image covering full ticket
-    ctx.save();
-    ctx.globalAlpha=1;
-    ctx.drawImage(bgImg,0,0,W,H);
-    ctx.restore();
-
-    // Dark overlay gradient pour lisibilité du bas
-    var grad=ctx.createLinearGradient(0,0,0,H);
-    grad.addColorStop(0,'rgba(0,0,0,0.15)');
-    grad.addColorStop(0.35,'rgba(0,0,0,0.4)');
-    grad.addColorStop(0.55,'rgba(0,0,0,0.88)');
-    grad.addColorStop(1,'rgba(0,0,0,0.97)');
-    ctx.fillStyle=grad;
-    ctx.fillRect(0,0,W,H);
-
-    drawContent(ctx,nom,ref,qrImg,W,H);
-  };
-  bgImg.onerror=function(){
-    // Fallback fond noir avec effets
-    var g=ctx.createRadialGradient(150,140,0,150,140,220);
-    g.addColorStop(0,'rgba(123,0,255,0.25)');g.addColorStop(1,'rgba(0,0,0,0)');
+  // Charger image de fond
+  var bg=new Image();
+  bg.onload=function(){
+    ctx.drawImage(bg,0,0,W,H);
+    // Overlay dégradé
+    var g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'rgba(0,0,0,0.1)');g.addColorStop(0.38,'rgba(0,0,0,0.5)');
+    g.addColorStop(0.55,'rgba(0,0,0,0.92)');g.addColorStop(1,'rgba(0,0,0,0.98)');
     ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    drawContent(ctx,nom,ref,qrImg,W,H);
+    dessiner();
   };
-  bgImg.src='bg.jpg';
-}
+  bg.onerror=function(){dessiner();};
+  bg.src='bg.jpg';
 
-function drawContent(ctx,nom,ref,qrImg,W,H){
-  var JAUNE='#FFEE00', ROSE='#FF2D9B', CYAN='#00FFCC', BLANC='#FFFFFF', OR='#C9A84C';
+  function dessiner(){
+    // Badge KIFA
+    ctx.strokeStyle='rgba(255,238,0,0.8)';ctx.lineWidth=1.2;rr(ctx,W/2-80,18,160,28,14);ctx.stroke();
+    ctx.fillStyle=OR;ctx.font='700 11px Arial';ctx.textAlign='center';ctx.letterSpacing='2px';
+    ctx.fillText('KIFA ROOFTOP',W/2,36);ctx.letterSpacing='0px';
 
-  // === BADGE KIFA ROOFTOP haut ===
-  ctx.strokeStyle='rgba(255,238,0,0.7)';ctx.lineWidth=1;
-  roundRect2(ctx,W/2-80,18,160,26,13);ctx.stroke();
-  ctx.fillStyle=JAUNE;ctx.font='700 11px Arial';ctx.textAlign='center';ctx.letterSpacing='2px';
-  ctx.fillText('KIFA ROOFTOP',W/2,35);ctx.letterSpacing='0px';
+    // Titre
+    ctx.fillStyle=ROSE;ctx.font='900 42px Arial';ctx.textAlign='center';
+    ctx.shadowColor=ROSE;ctx.shadowBlur=15;ctx.fillText('KIFA',W/2,308);
+    ctx.fillStyle=JAUNE;ctx.font='900 68px Arial';
+    ctx.shadowColor=JAUNE;ctx.shadowBlur=20;ctx.fillText('FLUO',W/2,376);
+    ctx.fillStyle=ROSE;ctx.font='900 52px Arial';
+    ctx.shadowColor=ROSE;ctx.shadowBlur=15;ctx.fillText('PARTY',W/2,430);
+    ctx.shadowBlur=0;
 
-  // === TITRE KIFA FLUO PARTY ===
-  // "KIFA" petit au dessus
-  ctx.fillStyle=ROSE;
-  ctx.font='900 38px Arial';
-  ctx.textAlign='center';
-  ctx.shadowColor=ROSE;ctx.shadowBlur=18;
-  ctx.fillText('KIFA',W/2,310);
+    // Lignes déco
+    [[120,ROSE],[265,CYAN],[390,JAUNE]].forEach(function(x){ctx.fillStyle=x[1];ctx.shadowColor=x[1];ctx.shadowBlur=6;ctx.fillRect(x[0],442,105,3);});
+    ctx.shadowBlur=0;
 
-  // "FLUO" grand jaune
-  ctx.fillStyle=JAUNE;
-  ctx.font='900 72px Arial';
-  ctx.shadowColor=JAUNE;ctx.shadowBlur=22;
-  ctx.fillText('FLUO',W/2,382);
+    // Date
+    ctx.fillStyle=BLANC;ctx.font='700 24px Arial';ctx.textAlign='center';
+    ctx.fillText('MERCREDI 8 JUILLET 2026',W/2,484);
+    ctx.fillStyle=JAUNE;ctx.font='600 15px Arial';ctx.letterSpacing='1px';
+    ctx.fillText('DÈS 17H — JUSQU'À 01H',W/2,507);ctx.letterSpacing='0px';
 
-  // "PARTY" rose
-  ctx.fillStyle=ROSE;
-  ctx.font='900 56px Arial';
-  ctx.shadowColor=ROSE;ctx.shadowBlur=18;
-  ctx.fillText('PARTY',W/2,438);
-  ctx.shadowBlur=0;
+    // Dress code
+    ctx.fillStyle='rgba(255,255,255,0.1)';rr(ctx,W/2-95,515,190,30,15);ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=0.8;rr(ctx,W/2-95,515,190,30,15);ctx.stroke();
+    ctx.fillStyle=BLANC;ctx.font='700 13px Arial';ctx.letterSpacing='0.5px';
+    ctx.fillText('DRESS CODE : BLANC 👕',W/2,534);ctx.letterSpacing='0px';
 
-  // Ligne déco tricolore
-  [[120,ROSE],[265,CYAN],[380,JAUNE]].forEach(function(x){
-    ctx.fillStyle=x[1];
-    ctx.shadowColor=x[1];ctx.shadowBlur=8;
-    ctx.fillRect(x[0],450,110,3);
-  });
-  ctx.shadowBlur=0;
+    // Découpe
+    ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,558,W,46);
+    ctx.fillStyle='#000';ctx.beginPath();ctx.arc(0,581,18,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(W,581,18,0,Math.PI*2);ctx.fill();
+    ctx.setLineDash([7,5]);ctx.strokeStyle='rgba(255,238,0,0.5)';ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(26,581);ctx.lineTo(574,581);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(10,10,10,0.9)';rr(ctx,258,569,84,24,12);ctx.fill();
+    ctx.strokeStyle='rgba(255,238,0,0.4)';ctx.lineWidth=0.7;rr(ctx,258,569,84,24,12);ctx.stroke();
+    ctx.fillStyle=JAUNE;ctx.font='700 9px Arial';ctx.letterSpacing='2px';
+    ctx.fillText('TICKET',W/2,585);ctx.letterSpacing='0px';
 
-  // === DATE ===
-  ctx.fillStyle=BLANC;ctx.font='800 26px Arial';ctx.textAlign='center';
-  ctx.shadowColor='rgba(255,238,0,0.5)';ctx.shadowBlur=10;
-  ctx.fillText('MERCREDI 8 JUILLET 2026',W/2,492);
-  ctx.shadowBlur=0;
+    // Zone infos
+    ctx.textAlign='left';
+    ctx.fillStyle='rgba(255,238,0,0.6)';ctx.font='400 9px Arial';ctx.letterSpacing='2px';
+    ctx.fillText('N° TICKET',62,620);ctx.letterSpacing='0px';
+    ctx.fillStyle=BLANC;ctx.font='800 17px Arial';ctx.letterSpacing='2px';
+    ctx.fillText('#'+ref,62,641);ctx.letterSpacing='0px';
 
-  // Heure
-  ctx.fillStyle=JAUNE;ctx.font='700 16px Arial';ctx.letterSpacing='1px';
-  ctx.fillText('DÈS 17H — JUSQU\'À 01H',W/2,516);ctx.letterSpacing='0px';
+    ctx.fillStyle='rgba(255,45,155,0.15)';rr(ctx,392,610,178,52,10);ctx.fill();
+    ctx.strokeStyle=ROSE;ctx.lineWidth=1;rr(ctx,392,610,178,52,10);ctx.stroke();
+    ctx.textAlign='center';
+    ctx.fillStyle=ROSE;ctx.font='400 9px Arial';ctx.letterSpacing='2px';ctx.fillText('TARIF ENTRÉE',481,628);ctx.letterSpacing='0px';
+    ctx.fillStyle=BLANC;ctx.font='900 20px Arial';ctx.fillText('10 000 FCFA',481,652);
 
-  // Dress code
-  ctx.fillStyle='rgba(255,255,255,0.12)';
-  roundRect2(ctx,W/2-90,525,180,28,14);ctx.fill();
-  ctx.strokeStyle=BLANC;ctx.lineWidth=0.8;
-  roundRect2(ctx,W/2-90,525,180,28,14);ctx.stroke();
-  ctx.fillStyle=BLANC;ctx.font='700 13px Arial';ctx.letterSpacing='1px';
-  ctx.fillText('DRESS CODE : BLANC 👕',W/2,543);ctx.letterSpacing='0px';
+    ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=0.8;
+    ctx.beginPath();ctx.moveTo(50,672);ctx.lineTo(550,672);ctx.stroke();
 
-  // === LIGNE DE DÉCOUPE ===
-  ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,563,W,44);
-  // Demi-cercles
-  ctx.fillStyle='#000000';
-  ctx.beginPath();ctx.arc(0,585,18,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(W,585,18,0,Math.PI*2);ctx.fill();
-  // Tirets
-  ctx.setLineDash([7,5]);ctx.strokeStyle='rgba(255,238,0,0.4)';ctx.lineWidth=1.2;
-  ctx.beginPath();ctx.moveTo(28,585);ctx.lineTo(572,585);ctx.stroke();
-  ctx.setLineDash([]);
-  // Label
-  ctx.fillStyle='rgba(20,20,20,0.9)';roundRect2(ctx,255,573,90,24,12);ctx.fill();
-  ctx.strokeStyle='rgba(255,238,0,0.4)';ctx.lineWidth=0.8;roundRect2(ctx,255,573,90,24,12);ctx.stroke();
-  ctx.fillStyle=JAUNE;ctx.font='700 9px Arial';ctx.letterSpacing='2px';
-  ctx.fillText('TICKET',W/2,589);ctx.letterSpacing='0px';
+    ctx.textAlign='left';ctx.fillStyle='rgba(255,238,0,0.6)';ctx.font='400 9px Arial';ctx.letterSpacing='2px';
+    ctx.fillText('DÉTAILS',62,695);ctx.letterSpacing='0px';
 
-  // === ZONE BASSE INFOS ===
-  // Numéro ticket
-  ctx.textAlign='left';
-  ctx.fillStyle='rgba(255,238,0,0.6)';ctx.font='400 9px Arial';ctx.letterSpacing='2px';
-  ctx.fillText('N° TICKET',62,622);ctx.letterSpacing='0px';
-  ctx.fillStyle=BLANC;ctx.font='800 16px Arial';ctx.letterSpacing='2px';
-  ctx.fillText('#'+ref,62,642);ctx.letterSpacing='0px';
+    [['DATE','Mercredi 8 Juillet 2026'],['HEURE','17h00 — 01h00'],['LIEU','KIFA Rooftop, Bingerville'],['PARTICIPANT',nom],['DRESS CODE','Blanc 👕']].forEach(function(r,i){
+      var y=716+i*26;
+      ctx.fillStyle='rgba(255,255,255,0.45)';ctx.font='400 10px Arial';ctx.fillText(r[0],62,y);
+      ctx.fillStyle=(r[0]==='PARTICIPANT')?CYAN:(r[0]==='DRESS CODE')?JAUNE:BLANC;
+      ctx.font='700 10px Arial';ctx.fillText(r[1],185,y);
+    });
 
-  // Tarif
-  ctx.fillStyle='rgba(255,45,155,0.18)';roundRect2(ctx,390,610,175,50,10);ctx.fill();
-  ctx.strokeStyle=ROSE;ctx.lineWidth=1;roundRect2(ctx,390,610,175,50,10);ctx.stroke();
-  ctx.textAlign='center';
-  ctx.fillStyle=ROSE;ctx.font='400 9px Arial';ctx.letterSpacing='2px';
-  ctx.fillText('TARIF ENTRÉE',477,627);ctx.letterSpacing='0px';
-  ctx.fillStyle=BLANC;ctx.font='900 19px Arial';
-  ctx.fillText('10 000 FCFA',477,650);
+    ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=0.8;
+    ctx.beginPath();ctx.moveTo(50,850);ctx.lineTo(550,850);ctx.stroke();
+    ctx.textAlign='center';
+    ctx.fillStyle='rgba(255,238,0,0.5)';ctx.font='400 8px Arial';ctx.letterSpacing='2px';
+    ctx.fillText("QR CODE D'ACCÈS",W/2,868);ctx.letterSpacing='0px';
 
-  // Séparateur
-  ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=0.8;
-  ctx.beginPath();ctx.moveTo(50,670);ctx.lineTo(550,670);ctx.stroke();
-
-  // Infos détails
-  ctx.textAlign='left';
-  ctx.fillStyle='rgba(255,238,0,0.6)';ctx.font='400 9px Arial';ctx.letterSpacing='2px';
-  ctx.fillText('DÉTAILS',62,694);ctx.letterSpacing='0px';
-
-  var rows=[
-    ['DATE','Mercredi 8 Juillet 2026'],
-    ['HEURE','17h00 — 01h00'],
-    ['LIEU','KIFA Rooftop, Bingerville'],
-    ['PARTICIPANT',nom],
-    ['DRESS CODE','Blanc 👕'],
-  ];
-  rows.forEach(function(r,i){
-    var y=716+i*26;
-    ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='400 10px Arial';ctx.fillText(r[0],62,y);
-    if(r[0]==='PARTICIPANT'){ctx.fillStyle=CYAN;}
-    else if(r[0]==='DRESS CODE'){ctx.fillStyle=JAUNE;}
-    else{ctx.fillStyle=BLANC;}
-    ctx.font='700 10px Arial';ctx.fillText(r[1],185,y);
-  });
-
-  // Séparateur QR
-  ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=0.8;
-  ctx.beginPath();ctx.moveTo(50,848);ctx.lineTo(550,848);ctx.stroke();
-
-  // QR Code
-  ctx.textAlign='center';
-  ctx.fillStyle='rgba(255,238,0,0.5)';ctx.font='400 8px Arial';ctx.letterSpacing='2px';
-  ctx.fillText('QR CODE D\'ACCÈS',W/2,866);ctx.letterSpacing='0px';
-
-  // QR Code - draw directly
-  var qs=110,qx=(W-qs)/2,qy=874;
-  ctx.fillStyle='#FFFFFF';roundRect2(ctx,qx-10,qy-10,qs+20,qs+20,8);ctx.fill();
-  ctx.strokeStyle=JAUNE;ctx.lineWidth=2;
-  ctx.shadowColor=JAUNE;ctx.shadowBlur=8;
-  roundRect2(ctx,qx-10,qy-10,qs+20,qs+20,8);ctx.stroke();
-  ctx.shadowBlur=0;
-  if(qrImg){
-    try{ctx.drawImage(qrImg,qx,qy,qs,qs);}
-    catch(e){
-      // Draw placeholder
-      ctx.fillStyle='#000';ctx.font='bold 9px Arial';ctx.textAlign='center';
-      ctx.fillText('QR CODE',qx+qs/2,qy+qs/2);
+    // QR
+    var qs=112,qx=(W-qs)/2,qy=876;
+    ctx.fillStyle='#FFF';rr(ctx,qx-8,qy-8,qs+16,qs+16,8);ctx.fill();
+    ctx.strokeStyle=JAUNE;ctx.lineWidth=2;ctx.shadowColor=JAUNE;ctx.shadowBlur=6;
+    rr(ctx,qx-8,qy-8,qs+16,qs+16,8);ctx.stroke();ctx.shadowBlur=0;
+    if(qrImg){
+      try{ctx.drawImage(qrImg,qx,qy,qs,qs);}
+      catch(e){ctx.fillStyle='#555';ctx.font='700 10px Arial';ctx.textAlign='center';ctx.fillText(ref,qx+qs/2,qy+qs/2);}
+    }else{
+      ctx.fillStyle='#333';ctx.font='700 9px Arial';ctx.textAlign='center';
+      ctx.fillText('SCANNER À L'ENTRÉE',qx+qs/2,qy+qs/2-5);
+      ctx.fillText(ref,qx+qs/2,qy+qs/2+10);
     }
-  } else {
-    // Draw placeholder text in QR zone
-    ctx.fillStyle='#333';ctx.font='bold 10px Arial';ctx.textAlign='center';
-    ctx.fillText('SCANNER À L'ENTRÉE',qx+qs/2,qy+qs/2-6);
-    ctx.fillText(ref,qx+qs/2,qy+qs/2+10);
-  }
 
-  // Ref sous QR
-  ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='400 8px Arial';ctx.letterSpacing='2px';
-  ctx.fillText(ref,W/2,996);ctx.letterSpacing='0px';
-
-  // Bande déco bas
-  var gradBas=ctx.createLinearGradient(0,0,W,0);
-  gradBas.addColorStop(0,ROSE);gradBas.addColorStop(0.5,JAUNE);gradBas.addColorStop(1,CYAN);
-  ctx.fillStyle=gradBas;ctx.fillRect(0,H-4,W,4);
-
-  // Contact
-  ctx.fillStyle='rgba(255,255,255,0.25)';ctx.font='400 8px Arial';ctx.letterSpacing='0.5px';
-  ctx.fillText('INFOS & RÉSERVATIONS : 07 19 42 54 53 — VIENS BRILLER. VIENS T\'ÉCLATER.',W/2,H-8);
-}
-
-function roundRect2(ctx,x,y,w,h,r){
-  ctx.beginPath();
-  ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-}
-
-
-function clock(){document.getElementById('clk').textContent=new Date().toLocaleTimeString('fr-FR');}
-
-// Bind all buttons
-// All buttons use inline onclick
-
-window.dlTicket=function(){
-  var c=document.getElementById('tc');
-  if(!c||c.width===0){notif('Génère un ticket d\'abord.','err');return;}
-  // Try standard download
-  try{
-    var link=document.createElement('a');
-    var nom=(document.getElementById('gen-nom')||{value:'ticket'}).value.trim().replace(/\s+/g,'_')||'ticket';
-    var num=(document.getElementById('gen-num')||{value:'0000'}).value.trim()||'0000';
-    link.download='Ticket_KIFA_'+nom+'_'+num+'.png';
-    link.href=c.toDataURL('image/png');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    notif('Ticket téléchargé !','ok');
-  } catch(e){
-    // Fallback: open in new tab so user can long-press
-    try{
-      var w=window.open('','_blank');
-      w.document.write('<html><body style="margin:0;background:#000;display:flex;flex-direction:column;align-items:center;padding:16px"><p style="color:#fff;font-family:Arial;margin-bottom:12px">Maintiens appuyé sur l\'image → Enregistrer l\'image</p><img src="'+c.toDataURL('image/png')+'" style="max-width:100%;border-radius:12px"/></body></html>');
-      w.document.close();
-    } catch(e2){
-      notif('Fais une capture d\'écran du ticket.','err');
-    }
+    // Bas
+    var gb=ctx.createLinearGradient(0,0,W,0);
+    gb.addColorStop(0,ROSE);gb.addColorStop(0.5,JAUNE);gb.addColorStop(1,CYAN);
+    ctx.fillStyle=gb;ctx.fillRect(0,H-4,W,4);
+    ctx.fillStyle='rgba(255,255,255,0.2)';ctx.font='400 8px Arial';ctx.textAlign='center';ctx.letterSpacing='0.3px';
+    ctx.fillText('INFOS & RÉSERVATIONS : 07 19 42 54 53 — VIENS BRILLER. VIENS T'ÉCLATER.',W/2,H-9);
   }
 }
 
-document.getElementById('btn-dl').addEventListener('click',dlTicket);
-
-var deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',function(e){
-  e.preventDefault(); deferredPrompt=e;
-  document.getElementById('install-banner').style.display='flex';
-});
-window.installApp=function(){
-  if(deferredPrompt){
-    deferredPrompt.prompt();
-    deferredPrompt.then(function(){deferredPrompt=null;document.getElementById('install-banner').style.display='none';});
-  }
+function clock(){
+  var now=new Date();
+  var h=String(now.getHours()).padStart(2,'0');
+  var m=String(now.getMinutes()).padStart(2,'0');
+  var s=String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('clk').textContent=h+':'+m+':'+s;
 }
 
-dbLoad(); drawDash(); fillSel();
-setInterval(clock,1000); clock();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
-
+dbLoad();drawDash();fillSel();
+setInterval(clock,1000);clock();
 </script>
 </body>
 </html>
