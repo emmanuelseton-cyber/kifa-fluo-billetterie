@@ -1,5 +1,5 @@
-const CACHE = 'kifa-fluo-v1';
-const FILES = ['/', '/index.html', '/manifest.json'];
+const CACHE = 'kifa-fluo-v8';
+const FILES = ['/', '/index.html', '/manifest.json', '/bg.jpg'];
 self.addEventListener('install', function(e) {
   e.waitUntil(caches.open(CACHE).then(function(c) { return c.addAll(FILES); }));
   self.skipWaiting();
