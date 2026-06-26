@@ -102,7 +102,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
 
 <div class="install-banner" id="install-banner">
   <span style="flex:1">📲 Installe l'app sur ton écran d'accueil pour l'utiliser hors ligne.</span>
-  <button id="install-btn">Installer</button>
+  <button id="install-btn" onclick="installApp()">Installer</button>
   <button class="ib-close" onclick="document.getElementById('install-banner').style.display='none'">✕</button>
 </div>
 
@@ -156,13 +156,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
       </div>
       <div class="cam-hint">Centre le QR code dans le cadre cyan</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">
-        <button class="btn bv" id="btn-cam" style="margin-top:0;flex:1">📷 Activer la caméra</button>
-        <button class="btn bg2" id="btn-cam-stop" style="margin-top:0;flex:1;display:none">⏹ Arrêter</button>
+        <button class="btn bv" id="btn-cam" style="margin-top:0;flex:1" onclick="startCam()">📷 Activer la caméra</button>
+        <button class="btn bg2" id="btn-cam-stop" style="margin-top:0;flex:1;display:none" onclick="stopCam()">⏹ Arrêter</button>
       </div>
       <p style="font-size:11px;color:var(--sub);text-align:center;margin-bottom:10px">— ou entre la référence manuellement —</p>
       <div class="scan-manual">
         <input type="text" id="sc-in" placeholder="KFP-2026-0001 ou 0001" autocomplete="off"/>
-        <button id="sc-btn">✓</button>
+        <button id="sc-btn" onclick="valider(document.getElementById('sc-in').value)">✓</button>
       </div>
     </div>
     <div id="sc-res" class="res"></div>
@@ -190,7 +190,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
     </div>
     <div class="card">
       <div class="sec">Exporter CSV</div>
-      <button class="btn bg2" id="btn-csv">⬇ Générer le CSV</button>
+      <button class="btn bg2" id="btn-csv" onclick="exportCSV()">⬇ Générer le CSV</button>
       <textarea class="csv-ta" id="csv-out" readonly placeholder="Le CSV apparaîtra ici..."></textarea>
     </div>
   </div>
@@ -207,14 +207,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
         <div class="fl"><label>Nom</label><input type="text" id="gen-nom" placeholder="Kofi Mensah"/></div>
         <div class="fl"><label>N° ticket</label><input type="text" id="gen-num" placeholder="0001"/></div>
       </div>
-      <button class="btn bv" id="btn-gen">🖼️ Générer le ticket</button>
+      <button class="btn bv" id="btn-gen" onclick="doGen()">🖼️ Générer le ticket</button>
     </div>
     <div id="gen-res" style="display:none">
       <div class="card">
         <div class="sec">Aperçu — maintenir appuyé pour enregistrer</div>
         <div class="tc-wrap">
           <canvas id="tc" width="600" height="990"></canvas>
-          <button class="btn bv" id="btn-dl" style="margin-top:4px;max-width:320px">⬇ Enregistrer le ticket</button>
+          <button class="btn bv" id="btn-dl" style="margin-top:4px;max-width:320px" onclick="dlTicket()">⬇ Enregistrer le ticket</button>
 <p class="tc-hint">Ou maintiens appuyé sur le ticket → Enregistrer l'image</p>
         </div>
       </div>
@@ -229,7 +229,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
         <div class="fl"><label>Prénom et Nom</label><input type="text" id="an" placeholder="Kofi Mensah" maxlength="30"/></div>
         <div class="fl"><label>N° (auto si vide)</label><input type="text" id="anum" placeholder="0001" maxlength="6"/></div>
       </div>
-      <button class="btn bv" id="btn-create">+ Créer le ticket</button>
+      <button class="btn bv" id="btn-create" onclick="creerTicket()">+ Créer le ticket</button>
     </div>
     <div class="card">
       <div class="sec">Créer plusieurs tickets</div>
@@ -238,16 +238,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fo
         <div class="fl"><label>Nom</label><input type="text" id="bn" placeholder="Konan"/></div>
       </div>
       <div class="fl"><label>Quantité (max 50)</label><input type="number" id="bq" value="1" min="1" max="50"/></div>
-      <button class="btn bg2" id="btn-batch">⧉ Créer les tickets</button>
+      <button class="btn bg2" id="btn-batch" onclick="creerBatch()">⧉ Créer les tickets</button>
     </div>
     <div class="card">
       <div class="sec">Réinitialiser une entrée</div>
       <div class="fl"><label>Référence ticket</label><input type="text" id="rref" placeholder="KFP-2026-0001"/></div>
-      <button class="btn bg2" id="btn-reinit">↺ Réinitialiser</button>
+      <button class="btn bg2" id="btn-reinit" onclick="reinit()">↺ Réinitialiser</button>
     </div>
     <div class="card">
       <div class="sec" style="color:var(--ko)">Zone danger</div>
-      <button class="btn br2" id="btn-vider">🗑 Supprimer tous les tickets</button>
+      <button class="btn br2" id="btn-vider" onclick="vider()">🗑 Supprimer tous les tickets</button>
     </div>
   </div>
 </div>
@@ -777,16 +777,7 @@ function roundRect2(ctx,x,y,w,h,r){
 function clock(){document.getElementById('clk').textContent=new Date().toLocaleTimeString('fr-FR');}
 
 // Bind all buttons
-document.getElementById('sc-btn').addEventListener('click',function(){valider(document.getElementById('sc-in').value);});
-document.getElementById('sc-in').addEventListener('keydown',function(e){if(e.key==='Enter')valider(document.getElementById('sc-in').value);});
-document.getElementById('btn-cam').addEventListener('click',startCam);
-document.getElementById('btn-cam-stop').addEventListener('click',stopCam);
-document.getElementById('btn-create').addEventListener('click',creerTicket);
-document.getElementById('btn-batch').addEventListener('click',creerBatch);
-document.getElementById('btn-reinit').addEventListener('click',reinit);
-document.getElementById('btn-vider').addEventListener('click',vider);
-document.getElementById('btn-csv').addEventListener('click',exportCSV);
-document.getElementById('btn-gen').addEventListener('click',doGen);
+// All buttons use inline onclick
 
 function dlTicket(){
   var c=document.getElementById('tc');
@@ -816,7 +807,17 @@ function dlTicket(){
 
 document.getElementById('btn-dl').addEventListener('click',dlTicket);
 
-// install prompt disabled
+var deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault(); deferredPrompt=e;
+  document.getElementById('install-banner').style.display='flex';
+});
+function installApp(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.then(function(){deferredPrompt=null;document.getElementById('install-banner').style.display='none';});
+  }
+}
 
 dbLoad(); drawDash(); fillSel();
 setInterval(clock,1000); clock();
